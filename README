@@ -1,6 +1,6 @@
-This program was built on macOS Catalina and tested on linux.student.cs environment
+I. This program was built on macOS Catalina and tested on linux.student.cs environment
 
-Things have been done:
+II. Things have been done:
 
 1.Implemented the sender program
 	step 1: Read parameter from required command-line interface.
@@ -21,14 +21,18 @@ Things have been done:
 	* Will start a timeout that starts at the arrival of the 1st message except "WILL SEND x MESSAGES" (This message won't be counted)
 	step 5: Print "Received x messages, y bytes."
 
-* The sender and receiver program exchange control information regarding the length of the file transfer by sending an extra message "WILL SEND x MESSAGES". When the receiver receives x messages, it terminates immediately.
+* The sender and receiver program exchange control information regarding the length of the file transfer by sending an extra message "WILL SEND x MESSAGES". 
+  When the receiver receives x messages, it terminates immediately.
 
 3. Makefile:
+According to pizza @22, I submit a Makefile with "all" and "clean" as empty targets, and executable files in the .zip
+https://piazza.com/class/keinfbebr1t2db?cid=22
 
-Things haven't been done:
+
+III. Things haven't been done:
 None
 
-Experiments:
+IV. Experiments:
 1.Report whether you observe any losses.
 I observe losses especially when the size of file-to-be-sent is over 1MB.
 
