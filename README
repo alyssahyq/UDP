@@ -3,7 +3,7 @@ This program was built on macOS Catalina and tested on linux.student.cs environm
 Things have been done:
 
 1.Implemented the sender program
-	step 1: Wait for the command-line input. 
+	step 1: Read parameter from required command-line interface.
 	step 2: Create the socket.
 	step 3: Open that file
 	step 4:	Calculate how many messages will be sent
@@ -14,7 +14,7 @@ Things have been done:
 	step 8: Close the socket
 	
 2.Implemented the receiver program
-	step 1: Wait for the command-line input. 
+	step 1: Read parameter from required command-line interface.
 	step 2: Crate the socket.
 	step 3: Print the port number, and save the port number into file "port".
 	step 4: Receive the message from the sender and write them into the file.
@@ -23,8 +23,61 @@ Things have been done:
 
 * The sender and receiver program exchange control information regarding the length of the file transfer by sending an extra message "WILL SEND x MESSAGES". When the receiver receives x messages, it terminates immediately.
 
+3. Makefile:
 
 Things haven't been done:
-1.Makefile
+None
 
 Experiments:
+1.Report whether you observe any losses.
+I observe losses especially when the size of file-to-be-sent is over 1MB.
+
+2.Devise and document two test runs that demonstrate that your receiver program satisﬁes the requirements of 
+a) immediately terminating after receiving the last message:
+When sending a file of 4096bytes, it terminate immediately after it receives all messages.
+
+y672huan@ubuntu1804-004:~/cs656/UDP$ ./sender localhost 8000 100 file4096
+Sent 41 messages, 4096bytes.
+
+y672huan@ubuntu1804-004:~/cs656/UDP$ time ./receiver /dev/null 10000
+Port:  8000
+Received  41  messages,  4096  bytes.
+
+real	0m14.797s
+user	0m0.049s
+sys	0m0.004s
+
+b) terminating after the timeout expires, if the file transfer is not completed.
+When sending a file of 1MB, it terminates after the timeout expires
+
+y672huan@ubuntu1804-004:~/cs656/UDP$ ./sender localhost 8000 100 file1mb
+Sent 10486 messages, 1048576bytes.
+
+y672huan@ubuntu1804-004:~/cs656/UDP$ time ./receiver /dev/null 10000
+Port:  8000
+Error: time out.
+Received  7243  messages,  724276  bytes.
+
+real	0m15.683s
+user	0m0.077s
+sys	0m0.020s
+
+3.Find parameter combinations that report a 'sys' time of at least 0.050s.
+A) When the payload decreases, the 'sys' time will increase
+y672huan@ubuntu1804-004:~/cs656/UDP$ time ./sender localhost 8000 1 file8192
+Sent 8193 messages, 8192bytes.
+
+real	0m0.098s
+user	0m0.035s
+sys	0m0.063s
+
+B) When the size of file-to-be-sent increases, the 'sys' time will increase 
+y672huan@ubuntu1804-004:~/cs656/UDP$ time ./sender localhost 8000 100 file1mb
+Sent 10486 messages, 1048576bytes.
+
+real	0m0.123s
+user	0m0.063s
+sys	0m0.059s
+
+C) Conclusion:
+With file size increasing or payload size decreasing, the number of messages will increase, which triggers the 'sys' time increases.
