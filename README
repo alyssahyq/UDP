@@ -1,8 +1,28 @@
 This program was built on macOS Catalina and tested on linux.student.cs environment
 
 Things have been done:
+
 1.Implemented the sender program
+	step 1: Wait for the command-line input. 
+	step 2: Create the socket.
+	step 3: Open that file
+	step 4:	Calculate how many messages will be sent
+	step 5: Send "WILL SEND x MESSAGES" to the receiver, x is the number of messages
+	* This message won't be counted
+	step 6: Send the file to the receiver
+	step 7: Print "Sent x messages, y bytes."
+	step 8: Close the socket
+	
 2.Implemented the receiver program
+	step 1: Wait for the command-line input. 
+	step 2: Crate the socket.
+	step 3: Print the port number, and save the port number into file "port".
+	step 4: Receive the message from the sender and write them into the file.
+	* Will start a timeout that starts at the arrival of the 1st message except "WILL SEND x MESSAGES" (This message won't be counted)
+	step 5: Print "Received x messages, y bytes."
+
+* The sender and receiver program exchange control information regarding the length of the file transfer by sending an extra message "WILL SEND x MESSAGES". When the receiver receives x messages, it terminates immediately.
+
 
 Things haven't been done:
 1.Makefile
