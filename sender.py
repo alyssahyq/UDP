@@ -16,7 +16,7 @@ def main():
     try:
         udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
     except:
-        print('Failed to get socket.',file=sys.stderr)
+        print('Failed to get socket.')
     file_size = os.path.getsize(file_name) #bytes
     bytes_sent = 0
     messages_sent = 0
