@@ -19,7 +19,7 @@ def main():
     file_size = os.path.getsize(file_name) #bytes
     bytes_sent = 0
     messages_sent = 0
-    with open(file_name, 'r',encoding='utf-8',errors='replace') as f:
+    with open(file_name, 'rb') as f:
         datagram_num = int(file_size/payload_size)+1
         claim = "WILL SEND "+str(datagram_num)+" MESSAGES"
         udp.sendto(claim.encode(),recv_addr)
@@ -27,7 +27,7 @@ def main():
             buff = f.read(payload_size)
             bytes_sent = bytes_sent+len(buff)
             messages_sent = messages_sent+1
-            udp.sendto(buff.encode(), recv_addr)
+            udp.sendto(buff, recv_addr)
     result = "Sent "+str(messages_sent)+" messages, "+str(bytes_sent)+"bytes."
     print(result)
     udp.close()

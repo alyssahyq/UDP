@@ -52,15 +52,16 @@ def recv_loop(udp_socket,f):
 def recv(udp_socket,f):
     global sum
     recv_data = udp_socket.recvfrom(1024)
-    message = bytes.decode(recv_data[0])
+    bytesflow = recv_data[0]
+    message = bytesflow.decode(encoding='UTF-8',errors='ignore')
     if re.match("WILL SEND [0-9]+ MESSAGES",message):
         sum = int(re.search("[0-9]+",message).group())
     else:
-        f.write(message)
+        f.write(bytesflow)
         global n_messages
         n_messages = n_messages+1
         global n_bytes
-        n_bytes = n_bytes + len(message)
+        n_bytes = n_bytes + len(bytesflow)
 
 def main():
     # receiver <file name> <timeout>
@@ -81,7 +82,7 @@ def main():
         udp_socket.bind(localaddr)
     except:
         print('Failed to bind.')
-    with open(file_name, 'a', encoding='utf-8',errors='replace') as f:
+    with open(file_name, 'wb') as f:
         recv(udp_socket,f)
         recv_loop(udp_socket,f)
     return 0
