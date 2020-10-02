@@ -63,12 +63,10 @@ def recv(udp_socket,f):
         n_bytes = n_bytes + len(message)
 
 def main():
-    command = sys.stdin.readline()
-    infos = (command.rstrip()).split(" ")
     # receiver <file name> <timeout>
-    file_name = infos[1]
+    file_name = sys.argv[1]
     global timeout
-    timeout = float(infos[2])/1000.0
+    timeout = float(sys.argv[2])/1000.0
 
     try:
         udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -83,7 +81,7 @@ def main():
         udp_socket.bind(localaddr)
     except:
         print('Failed to bind.')
-    with open(file_name, 'a') as f:
+    with open(file_name, 'a', encoding='utf-8',errors='ignore') as f:
         recv(udp_socket,f)
         recv_loop(udp_socket,f)
     return 0

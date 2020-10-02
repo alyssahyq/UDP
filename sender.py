@@ -4,14 +4,13 @@ import sys
 import os
 
 def main():
-    command = sys.stdin.readline()
-    infos = (command.rstrip()) .split(" ")
     #sender <host> <port> <payload size> <file name>
-    host = infos[1]
-    port = infos[2]
-    payload_size = int(infos[3])
-    file_name = infos[4]
+    host = sys.argv[1]
+    port = sys.argv[2]
+    payload_size = int(sys.argv[3])
+    file_name = sys.argv[4]
     recv_addr = (host,int(port))
+
 
     try:
         udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
@@ -20,7 +19,7 @@ def main():
     file_size = os.path.getsize(file_name) #bytes
     bytes_sent = 0
     messages_sent = 0
-    with open(file_name, 'r') as f:
+    with open(file_name, 'r',encoding='utf-8',errors='ignore') as f:
         datagram_num = int(file_size/payload_size)+1
         claim = "WILL SEND "+str(datagram_num)+" MESSAGES"
         udp.sendto(claim.encode(),recv_addr)
@@ -29,7 +28,8 @@ def main():
             bytes_sent = bytes_sent+len(buff)
             messages_sent = messages_sent+1
             udp.sendto(buff.encode(), recv_addr)
-    print("Sent ",messages_sent," messages, ",bytes_sent, "bytes.")
+    result = "Sent "+str(messages_sent)+" messages, "+str(bytes_sent)+"bytes."
+    print(result)
     udp.close()
 
 if __name__ == "__main__":
