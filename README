@@ -20,6 +20,7 @@ II. Things have been done:
 	step 4: Receive the message from the sender and write them into the file.
 	* Will start a timeout that starts at the arrival of the 1st message except "WILL SEND x MESSAGES" (This message won't be counted)
 	step 5: Print "Received x messages, y bytes."
+	step 6: Close the socket
 
 * The sender and receiver program exchange control information regarding the length of the file transfer by sending an extra message "WILL SEND x MESSAGES". 
   When the receiver receives x messages, it terminates immediately.
