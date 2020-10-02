@@ -73,7 +73,7 @@ def main():
     try:
         udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     except:
-        print('Failed to get socket.', file=sys.stderr)
+        print('Failed to get socket.')
     port = 8000
     localaddr = ("", port)
     print("Port: ",port)
@@ -82,7 +82,7 @@ def main():
     try:
         udp_socket.bind(localaddr)
     except:
-        print('Failed to bind.', file=sys.stderr)
+        print('Failed to bind.')
     with open(file_name, 'a') as f:
         recv(udp_socket,f)
         recv_loop(udp_socket,f)
