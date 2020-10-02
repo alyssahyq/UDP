@@ -81,7 +81,7 @@ def main():
         udp_socket.bind(localaddr)
     except:
         print('Failed to bind.')
-    with open(file_name, 'a', encoding='utf-8',errors='ignore') as f:
+    with open(file_name, 'a', encoding='utf-8',errors='replace') as f:
         recv(udp_socket,f)
         recv_loop(udp_socket,f)
     return 0
