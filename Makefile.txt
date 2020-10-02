@@ -5,10 +5,10 @@
 all: sender receiver
 
 sender: 
-	echo "chmod +x sender.py"
+	chmod +x sender.py
 
 receiver: 
-	echo "chmod +x receiver.py"
+	chmod +x receiver.py
 
 clean:
 	rm -f port
